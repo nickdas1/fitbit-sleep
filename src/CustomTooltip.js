@@ -6,9 +6,31 @@ const CustomTooltip = ({ active, payload, label, notes }) => {
     );
 
     if (active && payload && payload.length) {
+        const startTime = new Date(
+            payload[0]?.payload?.startTime
+        ).toLocaleTimeString();
+        const endTime = new Date(
+            payload[0]?.payload?.endTime
+        ).toLocaleTimeString();
+        const duration = parseFloat(
+            payload[0]?.payload.duration / 1000 / 60 / 60
+        ).toFixed(2);
+
         return (
             <div>
-                <p>{label}</p>
+                <div>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                        }}
+                    >
+                        <p>{label}</p>
+                        <p>Duration: {duration} hours</p>
+                    </div>
+                    <p>Start: {startTime}</p>
+                    <p>End: {endTime}</p>
+                </div>
                 {payload.map((sleepType, index) => (
                     <span
                         style={{
