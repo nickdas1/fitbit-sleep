@@ -32,24 +32,28 @@ const Chart = ({ data }) => {
                 type="monotone"
                 dataKey={(data) => getSleepMinutes(data, "deep")}
                 stroke="#0a3161"
+                strokeWidth={3}
             />
             <Line
                 name="REM"
                 type="monotone"
                 dataKey={(data) => getSleepMinutes(data, "rem")}
                 stroke="#87ceeb"
+                strokeWidth={3}
             />
             <Line
                 name="Awake"
                 type="monotone"
                 dataKey={(data) => getSleepMinutes(data, "wake")}
                 stroke="#cc0000"
+                strokeWidth={3}
             />
             <Line
                 name="Light"
                 type="monotone"
                 dataKey={(data) => getSleepMinutes(data, "light")}
                 stroke="#0077be"
+                strokeWidth={3}
             />
             <CartesianGrid stroke="#ccc" />
             <XAxis dataKey="dateOfSleep">
@@ -60,7 +64,7 @@ const Chart = ({ data }) => {
                     value="Duration (Minutes)"
                     position="insideLeft"
                     angle={-90}
-                    offset={-30}
+                    offset={-20}
                 />
             </YAxis>
             <Tooltip
