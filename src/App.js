@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Chart from "./Chart";
 import { ACCESS_TOKEN, ENCODED_CLIENT_INFO, REFRESH_TOKEN } from "./constants";
 
 const App = () => {
@@ -29,7 +30,7 @@ const App = () => {
         const getSleepData = async () => {
             const response = await axios
                 .get(
-                    "https://api.fitbit.com/1.2/user/-/sleep/list.json?afterDate=2023-01-01&offset=0&limit=100&sort=desc",
+                    "https://api.fitbit.com/1.2/user/-/sleep/list.json?afterDate=2023-01-01&offset=0&limit=100&sort=asc",
                     { headers: { Authorization: "Bearer " + accessToken } }
                 )
                 .catch((err) => {
@@ -59,6 +60,9 @@ const App = () => {
     return (
         <div className="App">
             <h1>Fitbit App</h1>
+            <div style={{ margin: "50px" }}>
+                <Chart data={sleepData.sleep} />
+            </div>
             {sleepData.sleep.map((sleep) => {
                 const { summary } = sleep.levels;
                 return (
