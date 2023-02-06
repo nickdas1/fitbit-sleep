@@ -35,7 +35,6 @@ const CustomTooltip = ({ active, payload, label, notes }) => {
                     <span
                         style={{
                             color: sleepType.color,
-                            paddingRight: "5px",
                         }}
                         key={`${payload.logId}${index}`}
                     >
