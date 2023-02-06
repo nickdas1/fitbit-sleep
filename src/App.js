@@ -30,7 +30,7 @@ const App = () => {
         const getSleepData = async () => {
             const response = await axios
                 .get(
-                    "https://api.fitbit.com/1.2/user/-/sleep/list.json?afterDate=2023-01-01&offset=0&limit=100&sort=asc",
+                    "https://api.fitbit.com/1.2/user/-/sleep/list.json?afterDate=2023-01-01&offset=0&limit=30&sort=asc",
                     { headers: { Authorization: "Bearer " + accessToken } }
                 )
                 .catch((err) => {
@@ -40,7 +40,6 @@ const App = () => {
                     }
                 });
             if (response?.data) {
-                console.log(response.data);
                 setSleepData(response.data);
             }
         };
@@ -59,24 +58,10 @@ const App = () => {
 
     return (
         <div className="App">
-            <h1>Fitbit App</h1>
-            <div style={{ margin: "50px" }}>
+            <h1 style={{ textAlign: "center" }}>30-Day Sleep Analysis</h1>
+            <div style={{ display: "flex", justifyContent: "center" }}>
                 <Chart data={sleepData.sleep} />
             </div>
-            {sleepData.sleep.map((sleep) => {
-                const { summary } = sleep.levels;
-                return (
-                    <div key={sleep.logId}>
-                        <h3>Date: {sleep.dateOfSleep}</h3>
-                        <ul>
-                            <li>Deep: {summary.deep.minutes} minutes</li>
-                            <li>REM: {summary.rem.minutes} minutes</li>
-                            <li>Light: {summary.light.minutes} minutes</li>
-                            <li>Wake: {summary.wake.minutes} minutes</li>
-                        </ul>
-                    </div>
-                );
-            })}
         </div>
     );
 };
