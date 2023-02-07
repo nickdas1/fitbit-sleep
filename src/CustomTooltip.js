@@ -12,9 +12,7 @@ const CustomTooltip = ({ active, payload, label, notes }) => {
         const endTime = new Date(
             payload[0]?.payload?.endTime
         ).toLocaleTimeString();
-        const duration = parseFloat(
-            payload[0]?.payload.duration / 1000 / 60 / 60
-        ).toFixed(2);
+        const duration = (payload[0]?.payload.minutesAsleep / 60).toFixed(2);
 
         return (
             <div>

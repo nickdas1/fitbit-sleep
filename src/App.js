@@ -9,8 +9,6 @@ const App = () => {
     const [accessToken, setAccessToken] = useState(ACCESS_TOKEN);
     const [refreshToken, setRefreshToken] = useState(REFRESH_TOKEN);
 
-    console.log(sleepData);
-
     useEffect(() => {
         const getSleepData = async () => {
             const response = await axios
