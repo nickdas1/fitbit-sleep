@@ -16,19 +16,14 @@ const CustomTooltip = ({ active, payload, label, notes }) => {
 
         return (
             <div>
-                <div>
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                        }}
-                    >
-                        <p>{label}</p>
-                        <p>Duration: {duration} hours</p>
-                    </div>
-                    <p>Start: {startTime}</p>
-                    <p>End: {endTime}</p>
-                </div>
+                <p>
+                    {label} -{" "}
+                    <span style={{ paddingRight: "10px" }}>
+                        Duration: {duration} hours
+                    </span>
+                </p>
+                <p>Start: {startTime}</p>
+                <p>End: {endTime}</p>
                 {payload.map((sleepType, index) => (
                     <span
                         style={{

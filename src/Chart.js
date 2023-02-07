@@ -14,6 +14,8 @@ import CustomTooltip from "./CustomTooltip";
 const tooltipStyle = {
     background: "#f0f0f0",
     padding: "0 10px 10px",
+    border: "2px solid #0077be",
+    borderRadius: "5px",
 };
 
 const Chart = ({ data }) => {
