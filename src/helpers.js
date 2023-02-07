@@ -2,7 +2,11 @@ import axios from "axios";
 import { ENCODED_CLIENT_INFO } from "./constants";
 
 export const hasInvalidToken = (data) => {
-    return data?.errors?.some((error) => error.errorType === "invalid_token");
+    return data?.errors?.some(
+        (error) =>
+            error.errorType === "invalid_token" ||
+            error.errorType === "expired_token"
+    );
 };
 
 export const resetToken = async (

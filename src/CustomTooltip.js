@@ -31,7 +31,7 @@ const CustomTooltip = ({ active, payload, label, notes }) => {
                         }}
                         key={`${payload.logId}${index}`}
                     >
-                        {sleepType.name}: {sleepType.value}
+                        {sleepType.name}: {sleepType.value || "n/a"}
                         {index !== payload.length - 1 && (
                             <span style={{ color: "black" }}> | </span>
                         )}

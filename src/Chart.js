@@ -20,7 +20,7 @@ const tooltipStyle = {
 
 const Chart = ({ data }) => {
     const getSleepMinutes = (data, sleepType) =>
-        data.levels.summary[sleepType].minutes;
+        data?.levels?.summary[sleepType]?.minutes;
 
     return (
         <LineChart
@@ -35,6 +35,7 @@ const Chart = ({ data }) => {
                 dataKey={(data) => getSleepMinutes(data, "deep")}
                 stroke="#0a3161"
                 strokeWidth={3}
+                connectNulls
             />
             <Line
                 name="REM"
@@ -42,6 +43,7 @@ const Chart = ({ data }) => {
                 dataKey={(data) => getSleepMinutes(data, "rem")}
                 stroke="#87ceeb"
                 strokeWidth={3}
+                connectNulls
             />
             <Line
                 name="Awake"
@@ -49,6 +51,7 @@ const Chart = ({ data }) => {
                 dataKey={(data) => getSleepMinutes(data, "wake")}
                 stroke="#cc0000"
                 strokeWidth={3}
+                connectNulls
             />
             <Line
                 name="Light"
@@ -56,6 +59,7 @@ const Chart = ({ data }) => {
                 dataKey={(data) => getSleepMinutes(data, "light")}
                 stroke="#0077be"
                 strokeWidth={3}
+                connectNulls
             />
             <CartesianGrid stroke="#ccc" />
             <XAxis dataKey="dateOfSleep">
@@ -73,6 +77,7 @@ const Chart = ({ data }) => {
                 content={<CustomTooltip />}
                 wrapperStyle={tooltipStyle}
                 notes={NOTES}
+                filterNull={false}
             />
             <Legend align="center" verticalAlign="top" />
         </LineChart>
