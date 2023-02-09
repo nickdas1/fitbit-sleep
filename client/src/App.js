@@ -1,13 +1,22 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Chart from "./Chart";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "./constants";
+import { ACCESS_TOKEN, REFRESH_TOKEN, apiUrl } from "./constants";
 import { hasInvalidToken, resetToken } from "./helpers";
 
 const App = () => {
     const [sleepData, setSleepData] = useState();
-    const [accessToken, setAccessToken] = useState(ACCESS_TOKEN);
-    const [refreshToken, setRefreshToken] = useState(REFRESH_TOKEN);
+    const [accessToken, setAccessToken] = useState("");
+    const [refreshToken, setRefreshToken] = useState("");
+
+    useEffect(() => {
+        const getTokens = async () => {
+            const res = await axios.get(apiUrl);
+            setAccessToken(res.data[0].accessToken);
+            setRefreshToken(res.data[0].refreshToken);
+        };
+        getTokens();
+    }, []);
 
     useEffect(() => {
         const getSleepData = async () => {
@@ -30,7 +39,9 @@ const App = () => {
                 setSleepData(response.data);
             }
         };
-        getSleepData();
+        if (accessToken) {
+            getSleepData();
+        }
     }, [accessToken, refreshToken]);
 
     if (!sleepData) {

@@ -23,3 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 client/src/constants.js
+server/constants.js
+*/package-lock.json

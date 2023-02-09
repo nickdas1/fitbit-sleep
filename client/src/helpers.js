@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ENCODED_CLIENT_INFO } from "./constants";
+import { apiUrl, ENCODED_CLIENT_INFO } from "./constants";
 
 export const hasInvalidToken = (data) => {
     return data?.errors?.some(
@@ -7,6 +7,13 @@ export const hasInvalidToken = (data) => {
             error.errorType === "invalid_token" ||
             error.errorType === "expired_token"
     );
+};
+
+export const updateTokens = async (accessToken, refreshToken) => {
+    await axios.put(apiUrl, {
+        accessToken,
+        refreshToken,
+    });
 };
 
 export const resetToken = async (
@@ -26,6 +33,7 @@ export const resetToken = async (
             }
         )
         .then((res) => {
+            updateTokens(res.data.access_token, res.data.refresh_token);
             accessTokenSetter(res.data.access_token);
             refreshTokenSetter(res.data.refresh_token);
         });
