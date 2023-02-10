@@ -1,13 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Chart from "./Chart";
-import { ACCESS_TOKEN, REFRESH_TOKEN, apiUrl } from "./constants";
+import { apiUrl } from "./constants";
 import { hasInvalidToken, resetToken } from "./helpers";
 
 const App = () => {
     const [sleepData, setSleepData] = useState();
     const [accessToken, setAccessToken] = useState("");
     const [refreshToken, setRefreshToken] = useState("");
+    const today = new Date().toISOString().split("T")[0];
 
     useEffect(() => {
         const getTokens = async () => {
@@ -22,7 +23,7 @@ const App = () => {
         const getSleepData = async () => {
             const response = await axios
                 .get(
-                    "https://api.fitbit.com/1.2/user/-/sleep/list.json?afterDate=2023-01-01&offset=0&limit=30&sort=asc",
+                    `https://api.fitbit.com/1.2/user/-/sleep/list.json?beforeDate=${today}&offset=0&limit=30&sort=asc`,
                     { headers: { Authorization: "Bearer " + accessToken } }
                 )
                 .catch((err) => {
@@ -42,7 +43,7 @@ const App = () => {
         if (accessToken) {
             getSleepData();
         }
-    }, [accessToken, refreshToken]);
+    }, [accessToken, refreshToken, today]);
 
     if (!sleepData) {
         return <div className="App">Looking for data. . .</div>;
