@@ -8,7 +8,9 @@ const App = () => {
     const [sleepData, setSleepData] = useState();
     const [accessToken, setAccessToken] = useState("");
     const [refreshToken, setRefreshToken] = useState("");
-    const today = new Date().toISOString().split("T")[0];
+    const tomorrow = new Date(Date.now() + 3600 * 1000 * 24)
+        .toISOString()
+        .split("T")[0];
 
     useEffect(() => {
         const getTokens = async () => {
@@ -23,7 +25,7 @@ const App = () => {
         const getSleepData = async () => {
             const response = await axios
                 .get(
-                    `https://api.fitbit.com/1.2/user/-/sleep/list.json?beforeDate=${today}&offset=0&limit=30&sort=asc`,
+                    `https://api.fitbit.com/1.2/user/-/sleep/list.json?beforeDate=${tomorrow}&offset=0&limit=30&sort=asc`,
                     { headers: { Authorization: "Bearer " + accessToken } }
                 )
                 .catch((err) => {
@@ -43,7 +45,7 @@ const App = () => {
         if (accessToken) {
             getSleepData();
         }
-    }, [accessToken, refreshToken, today]);
+    }, [accessToken, refreshToken, tomorrow]);
 
     if (!sleepData) {
         return <div className="App">Looking for data. . .</div>;
