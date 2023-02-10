@@ -24,10 +24,10 @@ const Chart = ({ data }) => {
 
     return (
         <LineChart
-            width={1200}
-            height={600}
+            width={1400}
+            height={700}
             data={data}
-            margin={{ top: 20, right: 50, bottom: 20, left: 50 }}
+            margin={{ top: 20, right: 50, bottom: 50, left: 50 }}
         >
             <Line
                 name="Deep"
@@ -62,7 +62,7 @@ const Chart = ({ data }) => {
                 connectNulls
             />
             <CartesianGrid stroke="#ccc" />
-            <XAxis dataKey="dateOfSleep">
+            <XAxis dataKey="dateOfSleep" angle={50} tickMargin={25}>
                 <Label value="Date" position="insideBottom" offset={-15} />
             </XAxis>
             <YAxis>
