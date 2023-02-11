@@ -3,7 +3,6 @@ import {
     Label,
     XAxis,
     YAxis,
-    Legend,
     BarChart,
     Bar,
     Tooltip,
