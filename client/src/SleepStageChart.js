@@ -18,7 +18,7 @@ const tooltipStyle = {
     borderRadius: "5px",
 };
 
-const Chart = ({ data }) => {
+const SleepStageChart = ({ data }) => {
     const getSleepMinutes = (data, sleepType) =>
         data?.levels?.summary[sleepType]?.minutes;
 
@@ -27,7 +27,7 @@ const Chart = ({ data }) => {
             width={1400}
             height={700}
             data={data}
-            margin={{ top: 20, right: 50, bottom: 50, left: 50 }}
+            margin={{ top: 20, right: 50, bottom: 60, left: 50 }}
         >
             <Line
                 name="Deep"
@@ -63,14 +63,14 @@ const Chart = ({ data }) => {
             />
             <CartesianGrid stroke="#ccc" />
             <XAxis dataKey="dateOfSleep" angle={50} tickMargin={25}>
-                <Label value="Date" position="insideBottom" offset={-15} />
+                <Label value="Date" position="insideBottom" offset={-60} />
             </XAxis>
             <YAxis>
                 <Label
                     value="Duration (Minutes)"
                     position="insideLeft"
                     angle={-90}
-                    offset={-20}
+                    offset={-10}
                 />
             </YAxis>
             <Tooltip
@@ -84,4 +84,4 @@ const Chart = ({ data }) => {
     );
 };
 
-export default Chart;
+export default SleepStageChart;

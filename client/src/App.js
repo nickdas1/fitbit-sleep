@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Chart from "./Chart";
+import SleepStageChart from "./SleepStageChart";
+import WakeupCountChart from "./WakeupCountChart";
 import { apiUrl } from "./constants";
 import { hasInvalidToken, resetToken } from "./helpers";
 
@@ -8,6 +9,7 @@ const App = () => {
     const [sleepData, setSleepData] = useState();
     const [accessToken, setAccessToken] = useState("");
     const [refreshToken, setRefreshToken] = useState("");
+    const [displayedGraph, setDisplayedGraph] = useState("sleepStages");
     const tomorrow = new Date(Date.now() + 3600 * 1000 * 24)
         .toISOString()
         .split("T")[0];
@@ -53,9 +55,32 @@ const App = () => {
 
     return (
         <div className="App">
-            <h1 style={{ textAlign: "center" }}>30-Day Sleep Analysis</h1>
+            <div style={{ textAlign: "center" }}>
+                <h1>30-Day Sleep Analysis</h1>
+                <input
+                    type="radio"
+                    id="sleepstages"
+                    value="sleepStages"
+                    name="graph"
+                    onClick={(e) => setDisplayedGraph(e.target.value)}
+                />
+                <label htmlFor="sleepstages">Sleep Stages</label>
+                <input
+                    type="radio"
+                    id="wakeups"
+                    value="wakeups"
+                    name="graph"
+                    onClick={(e) => setDisplayedGraph(e.target.value)}
+                />
+                <label htmlFor="wakeups">Wakeups</label>
+            </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
-                <Chart data={sleepData.sleep} />
+                {displayedGraph === "sleepStages" && (
+                    <SleepStageChart data={sleepData.sleep} />
+                )}
+                {displayedGraph === "wakeups" && (
+                    <WakeupCountChart data={sleepData.sleep} />
+                )}
             </div>
         </div>
     );
