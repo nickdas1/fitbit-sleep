@@ -7,6 +7,15 @@ import {
     Bar,
     Tooltip,
 } from "recharts";
+import { NOTES } from "./constants";
+import CustomTooltip from "./CustomTooltip";
+
+const tooltipStyle = {
+    background: "#f0f0f0",
+    padding: "0 10px 10px",
+    border: "2px solid #0077be",
+    borderRadius: "5px",
+};
 
 const WakeupCountChart = ({ data }) => {
     const getNumberOfWakeups = (data) =>
@@ -21,7 +30,12 @@ const WakeupCountChart = ({ data }) => {
         >
             <Bar dataKey={(data) => getNumberOfWakeups(data)} fill="#cc0000" />
             <CartesianGrid stroke="#ccc" strokeDasharray="4" vertical={false} />
-            <XAxis dataKey="dateOfSleep" angle={50} tickMargin={25}>
+            <XAxis
+                dataKey="dateOfSleep"
+                angle={50}
+                tickMargin={25}
+                interval={0}
+            >
                 <Label value="Date" position="insideBottom" offset={-60} />
             </XAxis>
             <YAxis>
@@ -32,7 +46,12 @@ const WakeupCountChart = ({ data }) => {
                     offset={-10}
                 />
             </YAxis>
-            <Tooltip />
+            <Tooltip
+                content={<CustomTooltip />}
+                wrapperStyle={tooltipStyle}
+                notes={NOTES}
+                filterNull={false}
+            />
         </BarChart>
     );
 };

@@ -62,7 +62,12 @@ const SleepStageChart = ({ data }) => {
                 connectNulls
             />
             <CartesianGrid stroke="#ccc" />
-            <XAxis dataKey="dateOfSleep" angle={50} tickMargin={25}>
+            <XAxis
+                dataKey="dateOfSleep"
+                angle={50}
+                tickMargin={25}
+                interval={0}
+            >
                 <Label value="Date" position="insideBottom" offset={-60} />
             </XAxis>
             <YAxis>
