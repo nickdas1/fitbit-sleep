@@ -27,7 +27,7 @@ const App = () => {
         const getSleepData = async () => {
             const response = await axios
                 .get(
-                    `https://api.fitbit.com/1.2/user/-/sleep/list.json?beforeDate=${tomorrow}&offset=0&limit=30&sort=asc`,
+                    `https://api.fitbit.com/1.2/user/-/sleep/list.json?beforeDate=${tomorrow}&offset=0&limit=32&sort=asc`,
                     { headers: { Authorization: "Bearer " + accessToken } }
                 )
                 .catch((err) => {
