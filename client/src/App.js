@@ -27,7 +27,7 @@ const App = () => {
         const getSleepData = async () => {
             const response = await axios
                 .get(
-                    `https://api.fitbit.com/1.2/user/-/sleep/list.json?beforeDate=${tomorrow}&offset=0&limit=32&sort=asc`,
+                    `https://api.fitbit.com/1.2/user/-/sleep/list.json?beforeDate=${tomorrow}&offset=0&limit=30&sort=desc`,
                     { headers: { Authorization: "Bearer " + accessToken } }
                 )
                 .catch((err) => {
@@ -41,7 +41,7 @@ const App = () => {
                     }
                 });
             if (response?.data) {
-                setSleepData(response.data);
+                setSleepData(response.data.sleep.reverse());
             }
         };
         if (accessToken) {
@@ -76,10 +76,10 @@ const App = () => {
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
                 {displayedGraph === "sleepStages" && (
-                    <SleepStageChart data={sleepData.sleep} />
+                    <SleepStageChart data={sleepData} />
                 )}
                 {displayedGraph === "wakeups" && (
-                    <WakeupCountChart data={sleepData.sleep} />
+                    <WakeupCountChart data={sleepData} />
                 )}
             </div>
         </div>
