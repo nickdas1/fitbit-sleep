@@ -62,6 +62,7 @@ const App = () => {
                     id="sleepstages"
                     value="sleepStages"
                     name="graph"
+                    checked={displayedGraph === "sleepStages"}
                     onClick={(e) => setDisplayedGraph(e.target.value)}
                 />
                 <label htmlFor="sleepstages">Sleep Stages</label>
@@ -70,6 +71,7 @@ const App = () => {
                     id="wakeups"
                     value="wakeups"
                     name="graph"
+                    checked={displayedGraph === "wakeups"}
                     onClick={(e) => setDisplayedGraph(e.target.value)}
                 />
                 <label htmlFor="wakeups">Wakeups</label>

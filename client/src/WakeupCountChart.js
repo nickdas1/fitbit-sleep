@@ -46,7 +46,12 @@ const WakeupCountChart = ({ data }) => {
                     offset={-10}
                 />
             </YAxis>
-            <Tooltip />
+            <Tooltip
+                content={<CustomTooltip />}
+                wrapperStyle={tooltipStyle}
+                notes={NOTES}
+                filterNull={false}
+            />
         </BarChart>
     );
 };
