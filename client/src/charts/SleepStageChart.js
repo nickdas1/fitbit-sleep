@@ -8,15 +8,9 @@ import {
     Tooltip,
     Legend,
 } from "recharts";
-import { NOTES } from "./constants";
-import CustomTooltip from "./CustomTooltip";
-
-const tooltipStyle = {
-    background: "#f0f0f0",
-    padding: "0 10px 10px",
-    border: "2px solid #0077be",
-    borderRadius: "5px",
-};
+import { NOTES } from "../constants";
+import { tooltipStyle } from "../constants/general";
+import CustomTooltip from "../CustomTooltip";
 
 const SleepStageChart = ({ data }) => {
     const getSleepMinutes = (data, sleepType) =>

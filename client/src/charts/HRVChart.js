@@ -7,20 +7,11 @@ import {
     Bar,
     Tooltip,
 } from "recharts";
-import { NOTES } from "./constants";
-import CustomTooltip from "./CustomTooltip";
+import { NOTES } from "../constants";
+import { tooltipStyle } from "../constants/general";
+import CustomTooltip from "../CustomTooltip";
 
-const tooltipStyle = {
-    background: "#f0f0f0",
-    padding: "0 10px 10px",
-    border: "2px solid #0077be",
-    borderRadius: "5px",
-};
-
-const WakeupCountChart = ({ data }) => {
-    const getNumberOfWakeups = (data) =>
-        data?.levels?.shortData?.filter((item) => item.level === "wake").length;
-
+const HRVChart = ({ data }) => {
     return (
         <BarChart
             width={1400}
@@ -28,19 +19,14 @@ const WakeupCountChart = ({ data }) => {
             data={data}
             margin={{ top: 20, right: 50, bottom: 60, left: 50 }}
         >
-            <Bar dataKey={(data) => getNumberOfWakeups(data)} fill="#cc0000" />
+            <Bar dataKey={(data) => data.value.dailyRmssd} fill="#82ca9d" />
             <CartesianGrid stroke="#ccc" strokeDasharray="4" vertical={false} />
-            <XAxis
-                dataKey="dateOfSleep"
-                angle={50}
-                tickMargin={25}
-                interval={0}
-            >
+            <XAxis dataKey="dateTime" angle={50} tickMargin={25} interval={0}>
                 <Label value="Date" position="insideBottom" offset={-60} />
             </XAxis>
             <YAxis>
                 <Label
-                    value="Number of Wakeups"
+                    value="HRV"
                     position="insideLeft"
                     angle={-90}
                     offset={-10}
@@ -56,4 +42,4 @@ const WakeupCountChart = ({ data }) => {
     );
 };
 
-export default WakeupCountChart;
+export default HRVChart;
