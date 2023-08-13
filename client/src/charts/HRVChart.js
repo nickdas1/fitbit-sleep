@@ -1,33 +1,28 @@
 import { useContext, useEffect, useState } from "react";
-import { CartesianGrid, Label, XAxis, YAxis, BarChart, Bar } from "recharts";
+import {
+    CartesianGrid,
+    Label,
+    XAxis,
+    YAxis,
+    BarChart,
+    Bar,
+    Tooltip,
+} from "recharts";
 import { getData } from "../helpers";
-import { HRV_ENDPOINT } from "../constants/general";
+import {
+    CURRENT_MONTH_HRV_ENDPOINT,
+    LAST_MONTH_HRV_ENDPOINT,
+} from "../constants/general";
 import { TokenContext } from "../TokenContext";
+import { NoData } from "../NoData";
 
-const HRVChart = () => {
-    const { accessToken, setAccessToken, refreshToken, setRefreshToken } =
-        useContext(TokenContext);
-    const [hrvData, setHRVData] = useState();
-
-    useEffect(() => {
-        if (accessToken) {
-            getData(
-                HRV_ENDPOINT,
-                accessToken,
-                setAccessToken,
-                refreshToken,
-                setRefreshToken,
-                setHRVData
-            );
-        }
-    }, [accessToken, refreshToken, setAccessToken, setRefreshToken]);
-
+const DefaultHRVChart = ({ data }) => {
     return (
         <BarChart
-            width={1400}
-            height={700}
-            data={hrvData?.hrv}
-            margin={{ top: 20, right: 50, bottom: 60, left: 50 }}
+            width={950}
+            height={475}
+            data={data}
+            margin={{ top: 20, right: 30, bottom: 60, left: 30 }}
         >
             <Bar dataKey={(data) => data.value.dailyRmssd} fill="#82ca9d" />
             <CartesianGrid stroke="#ccc" strokeDasharray="4" vertical={false} />
@@ -42,7 +37,47 @@ const HRVChart = () => {
                     offset={-10}
                 />
             </YAxis>
+            <Tooltip />
         </BarChart>
+    );
+};
+
+const HRVChart = () => {
+    const { accessToken, setAccessToken, refreshToken, setRefreshToken } =
+        useContext(TokenContext);
+    const [currentHRVData, setCurrentHRVData] = useState();
+    const [previousHRVData, setPreviousHRVData] = useState();
+
+    useEffect(() => {
+        if (accessToken) {
+            getData(
+                CURRENT_MONTH_HRV_ENDPOINT,
+                accessToken,
+                setAccessToken,
+                refreshToken,
+                setRefreshToken,
+                setCurrentHRVData
+            );
+            getData(
+                LAST_MONTH_HRV_ENDPOINT,
+                accessToken,
+                setAccessToken,
+                refreshToken,
+                setRefreshToken,
+                setPreviousHRVData
+            );
+        }
+    }, [accessToken, refreshToken, setAccessToken, setRefreshToken]);
+
+    if (!currentHRVData) {
+        return <NoData />;
+    }
+
+    return (
+        <>
+            <DefaultHRVChart data={previousHRVData.hrv} />
+            <DefaultHRVChart data={currentHRVData.hrv} />
+        </>
     );
 };
 

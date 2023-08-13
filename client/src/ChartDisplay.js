@@ -6,8 +6,7 @@ import { getData } from "./helpers";
 import ChartSelectors from "./ChartSelectors";
 import HRVChart from "./charts/HRVChart";
 import { TokenContext } from "./TokenContext";
-
-const NoData = () => <div className="App">Looking for data. . .</div>;
+import { NoData } from "./NoData";
 
 export const ChartDisplay = () => {
     const { accessToken, setAccessToken, refreshToken, setRefreshToken } =
@@ -47,7 +46,7 @@ export const ChartDisplay = () => {
                     <SleepStageChart data={sleepData.sleep.reverse()} />
                 )}
                 {displayedGraph === "wakeups" && (
-                    <WakeupCountChart data={sleepData.sleep.reverse()} />
+                    <WakeupCountChart data={sleepData.sleep} />
                 )}
                 {displayedGraph === "hrv" && <HRVChart />}
             </div>
