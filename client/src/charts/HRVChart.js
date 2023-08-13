@@ -1,23 +1,13 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CartesianGrid, Label, XAxis, YAxis, BarChart, Bar } from "recharts";
-import { apiUrl } from "../constants";
 import { getData } from "../helpers";
 import { HRV_ENDPOINT } from "../constants/general";
+import { TokenContext } from "../TokenContext";
 
 const HRVChart = () => {
+    const { accessToken, setAccessToken, refreshToken, setRefreshToken } =
+        useContext(TokenContext);
     const [hrvData, setHRVData] = useState();
-    const [accessToken, setAccessToken] = useState("");
-    const [refreshToken, setRefreshToken] = useState("");
-
-    useEffect(() => {
-        const getTokens = async () => {
-            const res = await axios.get(apiUrl);
-            setAccessToken(res.data[0].accessToken);
-            setRefreshToken(res.data[0].refreshToken);
-        };
-        getTokens();
-    }, []);
 
     useEffect(() => {
         if (accessToken) {
@@ -30,7 +20,7 @@ const HRVChart = () => {
                 setHRVData
             );
         }
-    }, [accessToken, refreshToken]);
+    }, [accessToken, refreshToken, setAccessToken, setRefreshToken]);
 
     return (
         <BarChart
