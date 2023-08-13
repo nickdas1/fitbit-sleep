@@ -8,7 +8,7 @@ import {
     Tooltip,
 } from "recharts";
 import { NOTES } from "../constants";
-import { tooltipStyle } from "../constants/general";
+import { TOOLTIP_STYLE } from "../constants/general";
 import CustomTooltip from "../CustomTooltip";
 
 const WakeupCountChart = ({ data }) => {
@@ -42,7 +42,7 @@ const WakeupCountChart = ({ data }) => {
             </YAxis>
             <Tooltip
                 content={<CustomTooltip />}
-                wrapperStyle={tooltipStyle}
+                wrapperStyle={TOOLTIP_STYLE}
                 notes={NOTES}
                 filterNull={false}
             />

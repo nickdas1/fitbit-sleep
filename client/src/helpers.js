@@ -1,6 +1,5 @@
 import axios from "axios";
 import { apiUrl, ENCODED_CLIENT_INFO } from "./constants";
-import { ONEMONTHAGO } from "./constants/general";
 
 export const hasInvalidToken = (data) => {
     return data?.errors?.some(
@@ -40,19 +39,16 @@ export const resetToken = async (
         });
 };
 
-export const getSleepData = async (
+export const getData = async (
+    endpoint,
     accessToken,
     setAccessToken,
     refreshToken,
     setRefreshToken,
-    setSleepData,
-    tomorrow
+    setData
 ) => {
     const response = await axios
-        .get(
-            `https://api.fitbit.com/1.2/user/-/sleep/list.json?beforeDate=${tomorrow}&offset=0&limit=30&sort=desc`,
-            { headers: { Authorization: "Bearer " + accessToken } }
-        )
+        .get(endpoint, { headers: { Authorization: "Bearer " + accessToken } })
         .catch((err) => {
             if (hasInvalidToken(err.response.data)) {
                 resetToken(refreshToken, setAccessToken, setRefreshToken);
@@ -60,30 +56,6 @@ export const getSleepData = async (
             }
         });
     if (response?.data) {
-        setSleepData(response.data.sleep.reverse());
-    }
-};
-
-export const getHRVData = async (
-    accessToken,
-    setAccessToken,
-    refreshToken,
-    setRefreshToken,
-    setHRVData,
-    tomorrow
-) => {
-    const response = await axios
-        .get(
-            `https://api.fitbit.com/1/user/-/hrv/date/${ONEMONTHAGO}/${tomorrow}.json`,
-            { headers: { Authorization: "Bearer " + accessToken } }
-        )
-        .catch((err) => {
-            if (hasInvalidToken(err.response.data)) {
-                resetToken(refreshToken, setAccessToken, setRefreshToken);
-                return;
-            }
-        });
-    if (response?.data) {
-        setHRVData(response.data.hrv);
+        setData(response.data);
     }
 };

@@ -6,7 +6,7 @@ const ChartSelectors = ({ displayedGraph, setDisplayedGraph }) => (
             value="sleepStages"
             name="graph"
             checked={displayedGraph === "sleepStages"}
-            onClick={(e) => setDisplayedGraph(e.target.value)}
+            onChange={(e) => setDisplayedGraph(e.target.value)}
         />
         <label htmlFor="sleepstages">Sleep Stages</label>
         <input
@@ -15,7 +15,7 @@ const ChartSelectors = ({ displayedGraph, setDisplayedGraph }) => (
             value="wakeups"
             name="graph"
             checked={displayedGraph === "wakeups"}
-            onClick={(e) => setDisplayedGraph(e.target.value)}
+            onChange={(e) => setDisplayedGraph(e.target.value)}
         />
         <label htmlFor="wakeups">Wakeups</label>
         <input
@@ -24,7 +24,7 @@ const ChartSelectors = ({ displayedGraph, setDisplayedGraph }) => (
             value="hrv"
             name="graph"
             checked={displayedGraph === "hrv"}
-            onClick={(e) => setDisplayedGraph(e.target.value)}
+            onChange={(e) => setDisplayedGraph(e.target.value)}
         />
         <label htmlFor="hrv">HRV</label>
     </>

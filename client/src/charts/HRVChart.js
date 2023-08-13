@@ -1,22 +1,42 @@
-import {
-    CartesianGrid,
-    Label,
-    XAxis,
-    YAxis,
-    BarChart,
-    Bar,
-    Tooltip,
-} from "recharts";
-import { NOTES } from "../constants";
-import { tooltipStyle } from "../constants/general";
-import CustomTooltip from "../CustomTooltip";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { CartesianGrid, Label, XAxis, YAxis, BarChart, Bar } from "recharts";
+import { apiUrl } from "../constants";
+import { getData } from "../helpers";
+import { HRV_ENDPOINT } from "../constants/general";
 
-const HRVChart = ({ data }) => {
+const HRVChart = () => {
+    const [hrvData, setHRVData] = useState();
+    const [accessToken, setAccessToken] = useState("");
+    const [refreshToken, setRefreshToken] = useState("");
+
+    useEffect(() => {
+        const getTokens = async () => {
+            const res = await axios.get(apiUrl);
+            setAccessToken(res.data[0].accessToken);
+            setRefreshToken(res.data[0].refreshToken);
+        };
+        getTokens();
+    }, []);
+
+    useEffect(() => {
+        if (accessToken) {
+            getData(
+                HRV_ENDPOINT,
+                accessToken,
+                setAccessToken,
+                refreshToken,
+                setRefreshToken,
+                setHRVData
+            );
+        }
+    }, [accessToken, refreshToken]);
+
     return (
         <BarChart
             width={1400}
             height={700}
-            data={data}
+            data={hrvData?.hrv}
             margin={{ top: 20, right: 50, bottom: 60, left: 50 }}
         >
             <Bar dataKey={(data) => data.value.dailyRmssd} fill="#82ca9d" />
@@ -32,12 +52,6 @@ const HRVChart = ({ data }) => {
                     offset={-10}
                 />
             </YAxis>
-            <Tooltip
-                content={<CustomTooltip />}
-                wrapperStyle={tooltipStyle}
-                notes={NOTES}
-                filterNull={false}
-            />
         </BarChart>
     );
 };

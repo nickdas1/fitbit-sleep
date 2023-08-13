@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import SleepStageChart from "./charts/SleepStageChart";
 import WakeupCountChart from "./charts/WakeupCountChart";
 import { apiUrl } from "./constants";
-import { TOMORROW } from "./constants/general";
-import { getHRVData, getSleepData } from "./helpers";
+import { SLEEP_ENDPOINT } from "./constants/general";
+import { getData } from "./helpers";
 import ChartSelectors from "./ChartSelectors";
 import HRVChart from "./charts/HRVChart";
 
@@ -12,7 +12,6 @@ const NoData = () => <div className="App">Looking for data. . .</div>;
 
 const App = () => {
     const [sleepData, setSleepData] = useState();
-    const [hrvData, setHRVData] = useState();
     const [accessToken, setAccessToken] = useState("");
     const [refreshToken, setRefreshToken] = useState("");
     const [displayedGraph, setDisplayedGraph] = useState("sleepStages");
@@ -28,21 +27,13 @@ const App = () => {
 
     useEffect(() => {
         if (accessToken) {
-            getSleepData(
+            getData(
+                SLEEP_ENDPOINT,
                 accessToken,
                 setAccessToken,
                 refreshToken,
                 setRefreshToken,
-                setSleepData,
-                TOMORROW
-            );
-            getHRVData(
-                accessToken,
-                setAccessToken,
-                refreshToken,
-                setRefreshToken,
-                setHRVData,
-                TOMORROW
+                setSleepData
             );
         }
     }, [accessToken, refreshToken]);
@@ -62,14 +53,12 @@ const App = () => {
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
                 {displayedGraph === "sleepStages" && (
-                    <SleepStageChart data={sleepData} />
+                    <SleepStageChart data={sleepData.sleep.reverse()} />
                 )}
                 {displayedGraph === "wakeups" && (
-                    <WakeupCountChart data={sleepData} />
+                    <WakeupCountChart data={sleepData.sleep.reverse()} />
                 )}
-                {displayedGraph === "hrv" && hrvData && (
-                    <HRVChart data={hrvData} />
-                )}
+                {displayedGraph === "hrv" && <HRVChart />}
             </div>
         </div>
     );
