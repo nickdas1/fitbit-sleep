@@ -69,7 +69,7 @@ const HRVChart = () => {
         }
     }, [accessToken, refreshToken, setAccessToken, setRefreshToken]);
 
-    if (!currentHRVData) {
+    if (!currentHRVData || !previousHRVData) {
         return <NoData />;
     }
 

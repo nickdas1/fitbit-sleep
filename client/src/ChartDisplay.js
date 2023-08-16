@@ -43,10 +43,10 @@ export const ChartDisplay = () => {
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
                 {displayedGraph === "sleepStages" && (
-                    <SleepStageChart data={sleepData.sleep.reverse()} />
+                    <SleepStageChart data={sleepData.sleep.toReversed()} />
                 )}
                 {displayedGraph === "wakeups" && (
-                    <WakeupCountChart data={sleepData.sleep} />
+                    <WakeupCountChart data={sleepData.sleep.toReversed()} />
                 )}
                 {displayedGraph === "hrv" && <HRVChart />}
             </div>
